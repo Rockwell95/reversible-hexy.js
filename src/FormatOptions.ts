@@ -1,11 +1,9 @@
-
-declare module "hexy" {
-  type FormatOptions = {
+export interface FormatOptions {
     width?: number;
     littleEndian?: boolean;
     radix?: number;
     numbering?: "hex_bytes" | "none";
-    format?: "eights" | "fours" | "twos" | "none";
+    format?: "sixteens" | "eights" | "fours" | "twos" | "none";
     caps?: "lower" | "upper";
     annotate?: "ascii" | "none";
     prefix?: string;
@@ -16,6 +14,3 @@ declare module "hexy" {
     length?: number;
     display_offset?: number;
   }
-  export const hexy: (arg: Buffer | string | number[], format?: FormatOptions) => string;
-  export const maxnumberlen: (bytes: number, radix: number) => number;
-}
