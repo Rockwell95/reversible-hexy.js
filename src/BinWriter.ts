@@ -1,4 +1,3 @@
-import { exit } from "process";
 import { BinWriterOptions } from "./BinWriterOptions";
 
 const HEX_POSTSCRIPT = 1;
@@ -77,8 +76,7 @@ export default class BinWriter {
       if (this.config.baseOff + wantOff !== haveOff) {
         haveOff = this.config.baseOff + wantOff;
         if (this.config.baseOff + wantOff < haveOff) {
-          console.error("Sorry, cannot seek backwards.");
-          exit(5);
+          throw new Error("Sorry, cannot seek backwards.");
         }
         for (; haveOff < this.config.baseOff + wantOff; haveOff++) {
           this.binary.push(0);
