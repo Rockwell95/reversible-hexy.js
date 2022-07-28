@@ -1,8 +1,8 @@
-[![build status](https://api.travis-ci.com/a2800276/hexy.js.svg)](https://app.travis-ci.com/github/a2800276/hexy.js)
+# reversible-hexy.js -- utility to convert to and from hex dumps 
 
- # hexy.js -- utility to create hex dumps 
+ This is a fork of [hexy.js](https://github.com/a2800276/hexy.js) by [a2800276](https://github.com/a2800276) that has been ported to TypeScript. Functionality has also been extended to support converting from hexdump files back into binary Buffers (similar to the `xxd -r` command). All credit goes to [a2800276](https://github.com/a2800276) for the original work that went into creating this library.
  
- `hexy` is an easy to use javascript library to create hex dumps. It
+ `reversible-hexy` is an easy to use javascript library to create hex dumps. It
  works just as well in node as in your browser. It contains a
  number of options to configure how the hex dump will end up looking.
  
@@ -13,7 +13,13 @@ var hexy = require('hexy'),
     b = Buffer.from("\000\001\003\005\037\012\011bcdefghijklmnopqrstuvwxyz0123456789")
         // or String or Array containing numbers ( bytes, i.e. < 0xFF )
 
-console.log(hexy.hexy(b))
+var str = hexy.hexy(b);
+
+// Create hex dump
+console.log(str);
+
+// Create buffer
+console.log(hexy.unHexy(str));
  ```
 
  results in this dump:
@@ -109,36 +115,41 @@ console.log(hexy.hexy(buffer, format))
  these days) :
    
 ```shell   
-$ npm install hexy
+$ npm install reversible-hexy
 ```
 
  This will install the lib which you'll be able to use like so:
      
 ```javascript     
-var hexy = require("hexy"),
+var hexy = require("reversible-hexy"),
     buf  = // get Buffer from somewhere,
     str  = hexy.hexy(buf)
  ```
 
- It will also install `hexy` into your path in case you're totally fed up
+ ```javascript
+ // For converting hexdumps into Buffers
+var hexy = require("reversible-hexy"),
+    str  = // get string hexdump from somewhere
+    buf  = hexy.unHexy(str);
+```
+
+ It will also install `reversible-hexy` into your path in case you're totally fed up
  with using `xxd`.
          
   
  If you don't like `npm`, grab the source from github:
  
-     http://github.com/a2800276/hexy.js
+     https://github.com/Rockwell95/reversible-hexy.js
  
  ## Typescript
 
 ```typescript
-import {hexy} from "hexy";
+import {hexy, unHexy} from "hexy";
 const buff = ...
+const str = ...
 console.log(hexy(buff));
+console.log(unHexy(str));
 ```
-
- ## Browser Support
- Browser support is fixed (now supports `Array` and `Uint8Array`) in 0.3.3.
- Please refer to `test.html` for examples.
  
  ## TODOS
  
@@ -160,6 +171,7 @@ console.log(hexy(buff));
  
  * Thanks to Isaac Schlueter [isaacs] for gratiously lending a hand and
  cheering me up.
+ * a2800276 (https://github.com/a2800276)
  * dodo (http://coderwall.com/dodo)
  * the fine folks at [Travis](http://travis-ci.org/a2800276/hexy.js)
  * radare (https://github.com/radare)
@@ -176,6 +188,11 @@ console.log(hexy(buff));
      http://github.com/a2800276/hexy
   
  in case these sorts of things interest you.
+
+### 0.3.5
+* Forked from original repo
+* Ported to pure TypeScript
+* Added `unHexy` function; allows for parsing of hexdump files back into binary `Buffer` objects.
 
 ### 0.3.4
 
